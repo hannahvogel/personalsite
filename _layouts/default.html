@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'en-AU' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% seo %}
+    <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
+    <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
+    <meta name="theme-color" content="#17324d">
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to main content</a>
+    {% include navigation.html %}
+
+    <main class="site-main" id="content" aria-label="Content" tabindex="-1">
+      {{ content }}
+    </main>
+
+    {% include footer.html %}
+  </body>
+</html>
