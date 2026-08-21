@@ -1,6 +1,6 @@
 # Hannah Vogel personal site
 
-Last verified: 2026-08-20
+Last verified: 2026-08-21
 
 ## Stack
 
@@ -10,7 +10,6 @@ Jekyll 4.4.1 on Ruby 4.0.6, with local SCSS and no client-side JavaScript.
 
 - `bundle exec jekyll serve` — local site at `http://127.0.0.1:4000/`
 - `bundle exec jekyll build` — production-style static build
-- `python3 -m unittest discover -s test -v` — repository contracts
 
 ## Structure
 

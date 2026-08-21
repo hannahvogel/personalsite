@@ -199,19 +199,6 @@ dl {
   margin-top: 1.75rem;
 }
 
-.source-note {
-  padding: 1rem 1.2rem;
-  border-left: 4px solid var(--accent);
-  color: var(--muted);
-  background: var(--panel);
-  font-size: 0.95rem;
-}
-
-.columns {
-  columns: 2 18rem;
-  column-gap: 3rem;
-}
-
 .teaching-list > div {
   display: grid;
   grid-template-columns: 7rem 1fr;

@@ -23,7 +23,6 @@ Before pushing, run:
 
 ```text
 bundle exec jekyll build
-python3 -m unittest discover -s test -v
 ```
 
 The separate `Lighthouse` workflow audits pull requests and pushes against the

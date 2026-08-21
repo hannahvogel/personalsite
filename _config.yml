@@ -1,8 +1,8 @@
 name: "Hannah Vogel"
 title: "Hannah Vogel — Archaeologist"
 description: >-
-  Archaeologist researching ableism, disability, embodiment and inclusive
-  practice in ancient-world studies.
+  Archaeologist researching ableism and disability in ancient societies and
+  in historical and archaeological scholarship.
 lang: en-AU
 url: "https://hvogel.org"
 baseurl: ""
@@ -12,7 +12,7 @@ email: hannah.vogel@mq.edu.au
 orcid: "0000-0001-6655-1604"
 macquarie_profile: "https://researchers.mq.edu.au/en/persons/hannah-vogel/"
 photo: ""
-photo_alt: "Portrait of Hannah Vogel"
+photo_alt: ""
 content_reviewed: "2026-08-20"
 
 permalink: /:title/
@@ -33,4 +33,3 @@ exclude:
   - LICENSE
   - NOTICE.md
   - README.md
-  - test

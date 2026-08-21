@@ -1,6 +1,6 @@
 # Working with AI in this repository
 
-Last verified: 2026-08-20
+Last verified: 2026-08-21
 
 Before asking an AI to change the site, write down:
 
@@ -27,8 +27,7 @@ After a change, run:
 
 ```text
 bundle exec jekyll build
-python3 -m unittest discover -s test -v
 ```
 
-Report exactly what those commands checked. Lighthouse is a separate,
+Report exactly what the build checked. Lighthouse is a separate,
 non-blocking GitHub workflow; a red score still needs investigation.
