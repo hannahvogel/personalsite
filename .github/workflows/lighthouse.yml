@@ -35,10 +35,16 @@ jobs:
           configPath: .github/lighthouse/lighthouserc.json
           uploadArtifacts: true
           artifactName: lighthouse-reports
-      - name: Require passing Lighthouse assertions
+      - name: Require shipped Lighthouse baseline
         env:
-          LIGHTHOUSE_ASSERTIONS: ${{ steps.lighthouse.outputs.assertionResults }}
+          LIGHTHOUSE_RESULTS_PATH: ${{ steps.lighthouse.outputs.resultsPath }}
         run: |
-          jq --exit-status \
-            'length == 4 and all(.[]; .passed == true)' \
-            <<<"${LIGHTHOUSE_ASSERTIONS}"
+          jq --exit-status --slurp '
+            length == 1 and all(
+              .[];
+              .categories.accessibility.score == 1 and
+              .categories["best-practices"].score == 1 and
+              .categories.performance.score == 1 and
+              .categories.seo.score == 1
+            )
+          ' "${LIGHTHOUSE_RESULTS_PATH}"/lhr-*.json
