@@ -15,9 +15,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up Ruby
-        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
         with:
           ruby-version: "4.0.6"
           bundler-cache: true
@@ -25,28 +25,20 @@ jobs:
         run: bundle exec jekyll build --destination "${RUNNER_TEMP}/site"
       - name: Serve local audit target
         run: |
-          mkdir -p "${RUNNER_TEMP}/lighthouse"
           python3 -m http.server 4173 --directory "${RUNNER_TEMP}/site" >"${RUNNER_TEMP}/jekyll-server.log" 2>&1 &
           curl --fail --silent --show-error --retry 10 --retry-connrefused --retry-delay 1 http://127.0.0.1:4173/ >/dev/null
-      - name: Run Lighthouse
+      - name: Run Lighthouse and check shipped baseline
         id: lighthouse
-        uses: foo-software/lighthouse-check-action@a80267da2e0244b8a2e457a8575fc47590615852 # v12.0.1
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # 12.6.2
         with:
-          device: desktop
-          outputDirectory: ${{ runner.temp }}/lighthouse
           urls: http://127.0.0.1:4173/
-      - name: Check shipped Lighthouse baseline
-        uses: foo-software/lighthouse-check-status-action@2b9d5101f7a0de86ddb153a0d77ad7046aac1052 # v3.0.1
-        with:
-          lighthouseCheckResults: ${{ steps.lighthouse.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "100"
-          minBestPracticesScore: "100"
-          minPerformanceScore: "100"
-          minSeoScore: "100"
-      - name: Upload Lighthouse reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-reports
-          path: ${{ runner.temp }}/lighthouse
-          if-no-files-found: error
+          configPath: .github/lighthouse/lighthouserc.json
+          uploadArtifacts: true
+          artifactName: lighthouse-reports
+      - name: Require passing Lighthouse assertions
+        env:
+          LIGHTHOUSE_ASSERTIONS: ${{ steps.lighthouse.outputs.assertionResults }}
+        run: |
+          jq --exit-status \
+            'length == 4 and all(.[]; .passed == true)' \
+            <<<"${LIGHTHOUSE_ASSERTIONS}"
